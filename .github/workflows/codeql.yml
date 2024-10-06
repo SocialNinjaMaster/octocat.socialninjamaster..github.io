@@ -1,0 +1,208 @@
+            - name: Deploy Static Files to GCP Storage
+   You may pin to the exact commit or the version.
+   uses: bitovi/github-actions-gcp-bucket@b80cbadca19a68e2283caf5f9d85eaa4017f6362
+  uses: bitovi/github-actions-gcp-bucket@first-release
+  with: Specifies if this action should checkout the code
+    checkout:  GCP Storage bucket to use. Defaults to `${org}-${repo}-{branch}-bucket`
+    bucket_name:  The name of the file(s) to upload to the bucket. Wildcards supported. Duplicate Files will be overwritten.
+    file_name: GCP Service Account Key JSON set as GOOGLE_CREDENTIALS secret.
+    gcp_access_key: `.env` file to be used with the app from Github secrets
+    dot_env:  `.env` file to be used with the app from Github variables
+    ghv_env:  Set to 'true' to Destroy the bucket and all child files.
+    bucket_destroy: optional, default is false
+          
+ the `language` matrix defined below to confirm you have the correct set of
+ supported CodeQL languages.
+
+name: "CodeQL Advanced"
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  schedule:
+    - cron: '31 0 * * 5'
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+     Runner size impacts CodeQL analysis time. To learn more, please see:
+       -             - name: Algorithmia test-algo
+   You may pin to the exact commit or the version.
+   uses: algorithmiaio/test-algo-action@cbfe0b98066531ff84d2a367c733a25e09ab7b8d
+  uses: algorithmiaio/test-algo-action@v0.1.1-rc6
+  with: 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
+         Use `c-cpp` to analyze code written in C, C++ or both
+         Use 'java-kotlin' to analyze code written in Java, Kotlin or both
+         Use 'javascript-typescript' to analyze code written in JavaScript, TypeScript or both
+     your typical Algorithmia API key
+    regular_api_key: X-GitHub-Api-Version
+     The API address for the Algorithmia Cluster you wish to connect to
+    api_address: curl --header "X-GitHub-Api-Version:2022-11-28" https://api.github.com/zen
+     The name of the Algorithm you want to test
+    algorithm_name: 
+     A list of Json Case objects that describe the desired test cases
+    cases: templates/adding_a_new_example_script/{{cookiecutter.directory_name}}/run_{{cookiecutter.example_shortcut}}.py              
+    - name: Docker Build Tag Publish to ECR
+   You may pin to the exact commit or the version.
+   uses: bitovi/github-actions-docker-ecr-publish@bcaf3fb11bafbc6ae884516e92f870ac11a5ae68
+  uses: bitovi/github-actions-docker-ecr-publish@v0.1.0
+  with:
+    # Checkout the repository
+    checkout: # optional, default is true
+    # Use action builtin login
+    aws_login: # optional, default is true
+    # AWS access key ID
+    aws_access_key_id: 
+    # AWS secret access key
+    aws_secret_access_key: 
+    # AWS session token
+    aws_session_token: # optional
+    # AWS default region
+    aws_default_region: # optional, default is us-east-1
+    # AWS ECR repository name. e.g. hello-repository
+    aws_ecr_repo_name: 
+    # Tag to override default Logic
+    image_tag: # optional, default is 
+    # Use the SHA for the tag.  Overrides the default logic.
+    use_sha: # optional
+    # Docker org name.
+    org_name: # optional, default is 
+    # Tag default branch with latest tag instead of branch name.
+    use_latest: # optional, default is true
+    # Add a string of values to the end of the build command
+    build_args: # optional
+    # Specify the working directory that the docker build will be run in
+    working_directory: # optional
+          
+                   - name: Deploy Environment
+   You may pin to the exact commit or the version.
+   uses: parasoft/deploy-environment-action@486e9382c6c2958fcbaad60b895da799d16730c2
+  uses: parasoft/deploy-environment-action@1.0.2
+  with:
+     CTP URL
+    ctpUrl: 
+     CTP Username
+    ctpUsername: 
+     CTP Password
+    ctpPassword: 
+     Name of the system
+    system: 
+     Name of the environment
+    environment: 
+     Name of the environment instance to provision
+    instance: 
+     Fail action and abort on provisioning failure
+    abortOnFailure: # optional
+     Virtual assets in the environment will be replicated on another server
+    copyToVirtualize: # optional
+     The environment assets will be copied to a Virtualize server matching this name
+    virtServerName: # optional
+     The name for the replicated environment can be used to later destroy the environment
+    newEnvironmentName: # optional
+     Duplicate associated data repositories before provisioning
+    duplicateDataRepo: # optional
+     Where to duplicate data repository
+    duplicateType: # optional
+     The host of the data repository server
+    repoHost: # optional
+     The port of the data repository server
+    repoPort: # optional
+     The username of the data repository server
+    repoUsername: # optional
+     The password of the data repository server
+    repoPassword: # optional
+          
+     Consider using larger runners or machines with greater resources for possible analysis time improvements.
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    permissions:
+       required for all workflows
+      security-events: write
+
+       required to fetch internal or private CodeQL packs
+      packages: read
+
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - language: javascript-typescript
+          build-mode:             - name: Altostra Push and Deploy
+   You may pin to the exact commit or the version.
+   uses: altostra/push-deploy-action@923558ba203fb0f856581e2b7f3eecd5887dfcbf
+  uses: altostra/push-deploy-action@v1.0.0
+  with:
+     The environment to which to deploy
+    env-name: 
+     The instance name to deploy
+    instance-name: 
+     Optional. The image name (i.e: 1.0.0, v2.4.1, alpha, dev, test, ...)
+    image-name: CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
+         Use `c-cpp` to analyze code written in C, C++ or both
+         Use 'java-kotlin' to analyze code written in Java, Kotlin or both
+         Use 'javascript-typescript' to analyze code written in JavaScript, TypeScript or both
+         To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
+         see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
+         If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
+         your codebase is analyzed, see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+     Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
+        #             - name: Azure Resource Manager (ARM) Template Deployment
+  # You may pin to the exact commit or the version.
+  # uses: whiteducksoftware/azure-arm-action@9bae2e95df87dbd4acae11deb0765be7256fd141
+  uses: whiteducksoftware/azure-arm-action@v3.3
+  with:
+    # Paste output of `az ad sp create-for-rbac -o json` as value of secret variable: AZURE_CREDENTIALS
+    creds: 
+    # Provide the name of a resource group.
+    resourceGroupName: 
+    # Specify the path to the Azure Resource Manager template.
+    templateLocation: 
+    # Specifies the name of the resource group deployment to create.
+    deploymentName: 
+    # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group).
+    deploymentMode: # optional, default is Incremental
+    # Specify either path to the Azure Resource Manager parameters file or pass them as 'key1=value1;key2=value2;...'.
+    parameters: # optional
+    # Specify either path to the Azure Resource Manager override parameters file or pass them as 'key1=value1;key2=value2;...'.
+    overrideParameters: # optional
+          If you wish to specify custom queries, you can do so here or in a config file.
+        # By default, queries listed here will override any specified in a config file.
+        # Prefix the list here with "+" to use these queries and those in the config file.
+
+        # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
+        # queries: security-extended,security-and-quality
+
+    # If the analyze step fails for one of the languages you are analyzing with
+    # "We were unable to automatically build your code", modify the matrix above
+    # to set the build mode to "manual" for that language. Then modify this step
+    # to build your code.
+    # ℹ️ Command-line programs to run using the OS shell.
+    # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+    - if: matrix.build-mode == 'manual'
+      shell: bash
+      run: |
+        echo 'If you are using a "manual" build mode for one or more of the' \
+          'languages you are analyzing, replace this with the commands to build' \
+          'your code, for example:'
+        echo '  make bootstrap'
+        echo '  make release'
+        exit 1
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
